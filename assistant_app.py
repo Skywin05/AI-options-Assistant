@@ -37,18 +37,27 @@ if st.sidebar.button("Run Analysis"):
         earnings_date = result.get("earnings_date", None)
         today = datetime.now().date()
 
-        if earnings_date:
-            days_to_earnings = (earnings_date.date() - today).days
-            if 0 <= days_to_earnings <= 7:
-                st.warning(
-                    f"Earnings around {earnings_date.date()} "
-                    f"(~{days_to_earnings} days away). "
-                    "Model is technical only; expect higher risk and IV moves."
-                )
+       # Earnings awareness
+earnings_date = result.get("earnings_date", None)
+today = datetime.now().date()
+
+if earnings_date:
+    days_to_earnings = (earnings_date.date() - today).days
+    if 0 <= days_to_earnings <= 7:
+        st.warning(
+            f"Earnings around {earnings_date.date()} "
+            f"(~{days_to_earnings} days away). "
+            "Model is technical only; expect higher risk and IV moves."
+        )
+    else:
+        st.info(
+            "No earnings within the next 7 days. "
+            "Signal is based on technicals only (no news/earnings input)."
+        )
 else:
     st.info(
-        "No earnings within the next 7 days. "
-        "Signal is based on technicals only (no news/earnings input)."
+        "Earnings date not available. Treat this as a pure technical signal "
+        "and double-check the calendar/news manually."
     )
 
 st.subheader("Latest news (Yahoo Finance)")
