@@ -4,3 +4,4 @@ pandas
 numpy
 scikit-learn
 xgboost
+yfinance>=0.2.0
