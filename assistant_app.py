@@ -37,7 +37,7 @@ if st.sidebar.button("Run Analysis"):
         earnings_date = result.get("earnings_date", None)
         today = datetime.now().date()
 
-       # Earnings awareness
+     # Earnings awareness
 earnings_date = result.get("earnings_date", None)
 today = datetime.now().date()
 
