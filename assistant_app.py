@@ -45,13 +45,14 @@ if st.sidebar.button("Run Analysis"):
                     f"(~{days_to_earnings} days away). "
                     "Model is technical only; expect higher risk and IV moves."
                 )
-            else:
-               st.info(
+           else:
+    st.info(
         "No earnings within the next 7 days. "
         "Signal is based on technicals only (no news/earnings input)."
     )
 
 st.subheader("Latest news (Yahoo Finance)")
+
 
         try:
             tk = yf.Ticker(ticker)
