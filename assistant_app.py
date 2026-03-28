@@ -49,7 +49,7 @@ if st.sidebar.button("Run Analysis"):
     st.info(
         "No earnings within the next 7 days. "
         "Signal is based on technicals only (no news/earnings input)."
-    )
+    
 
 st.subheader("Latest news (Yahoo Finance)")
 
