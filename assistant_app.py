@@ -51,7 +51,7 @@ if st.sidebar.button("Run Analysis"):
         "Signal is based on technicals only (no news/earnings input)."
     )
 
-st.subheader("Latest news (Yahoo Finance)"
+st.subheader("Latest news (Yahoo Finance)")
 
 
         try:
