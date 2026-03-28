@@ -83,7 +83,7 @@ st.subheader("Latest news (Yahoo Finance)")
             st.write("Could not load news for this ticker.")
             st.write(e)
                     
-                )
+              
         else:
             st.info(
                 "Earnings date not available. Treat this as a pure technical signal "
