@@ -1,7 +1,20 @@
 import streamlit as st
 from datetime import datetime
 from model_utils import run_model_for
+import yfinance as yf
+import datetime as dt
+positive_words = ["beats", "beat", "surge", "rally", "upgrade", "strong",
+                  "record", "bullish", "profit", "soars", "jump"]
+negative_words = ["miss", "cuts", "cut", "downgrade", "plunge", "fall",
+                  "weak", "loss", "bearish", "lawsuit", "drops", "drop"]
 
+def get_sentiment_color(title: str):
+    t = title.lower()
+    if any(w in t for w in positive_words):
+        return "green"   # good news
+    if any(w in t for w in negative_words):
+        return "red"     # bad news
+    return "gray"        # neutral
 st.set_page_config(page_title="AI Options Assistant", layout="wide")
 
 st.title("AI Options Assistant")
@@ -36,6 +49,39 @@ if st.sidebar.button("Run Analysis"):
                 st.info(
                     f"No earnings within the next 7 days. "
                     "Signal is based on technicals only (no news/earnings input)."
+        st.subheader("Latest news (Yahoo Finance)")
+
+        try:
+            tk = yf.Ticker(ticker)
+
+            news_items = getattr(tk, "news", []) or []
+
+            if not news_items:
+                st.write("No recent news found for this ticker.")
+            else:
+                max_items = 10
+                for item in news_items[:max_items]:
+                    title = item.get("title", "No title")
+                    link = item.get("link", "")
+                    publisher = item.get("publisher", "Unknown source")
+                    ts = item.get("providerPublishTime")
+
+                    if isinstance(ts, (int, float)):
+                        published = dt.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M")
+                    else:
+                        published = "Unknown time"
+
+                    color = get_sentiment_color(title)
+
+                    st.markdown(f":{color}[**{title}**]")
+                    st.write(f"{publisher} • {published}")
+                    if link:
+                        st.markdown(f"[Read article]({link})")
+                    st.markdown("---")
+        except Exception as e:
+            st.write("Could not load news for this ticker.")
+            st.write(e)
+                    
                 )
         else:
             st.info(
